@@ -3,6 +3,7 @@ const path = require('path');
 const express = require('express');
 
 const router = express.Router();
+const userController = require('../controllers/user');
 
 const users = [];
 
@@ -14,6 +15,8 @@ router.get('/login', (req, res, next) => {
         activeLogin: true    
     });
 });
+
+router.get('/transactions', userController.getTransactions);
 
 router.get('/register', (req, res, next) => {
     console.log('register');
