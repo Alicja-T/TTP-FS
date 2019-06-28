@@ -2,30 +2,57 @@ const path = require('path');
 
 const express = require('express');
 
-const rootDir = require('../utils/path');
-
 const router = express.Router();
 
-router.use("/login",(req, res, next) =>{
-    console.log('login');
-    res.sendFile(path.join(rootDir, 'views', 'login.html'));
+const users = [];
+
+router.get('/login', (req, res, next) => {
+    res.render('login', {
+        pageTitle: 'login',
+        path: '/login',
+        loginCSS: true,
+        activeLogin: true    
+    });
 });
 
-router.use("/register",(req, res, next) =>{
+router.get('/register', (req, res, next) => {
     console.log('register');
-    res.sendFile(path.join(rootDir, 'views', 'register.html'));
+    res.render('register', {
+        pageTitle: 'Register',
+        path: '/register',
+        formCSS: true,
+        activeRegister: true
+    });
 });
 
-router.get("/portfolio",(req, res, next) =>{
+router.post('/register',(req, res, next) => {
+    console.log('registered');
+    users.push({ user: req.body.name});
+    console.log(users);
+    res.redirect('/');
+});
+
+router.get('/portfolio',(req, res, next) => {
     console.log('register');
-    res.sendFile(path.join(rootDir, 'views', 'portfolio.html'));
+    res.render('portfolio', {
+        pageTitle: 'Portfolio',
+        path: '/portfolio',
+        activePortfolio: true
+    });
 });
 
 
-router.get("/",(req, res, next) =>{
+router.get("/",(req, res, next) => {
     console.log('home page');
-    res.sendFile(path.join(rootDir, 'views', 'index.html'));
+    res.render('index', {
+        pageTitle: 'home',
+        path: '/',
+        activeHome: true
+    });
 });
 
 
-module.exports = router;
+module.exports = {
+    routes: router,
+    users: users
+}
