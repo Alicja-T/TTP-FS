@@ -7,7 +7,7 @@
         <h1>Transactions:</h1>
             <ul>
                 <% for (let transaction of transactions) { %>
-                <li><%=transaction.date%> <%=transaction.ticker%> <%=transaction.ticker_price%></li>
+                <li><%=transaction.userId%> <%=transaction.ticker%> <%=transaction.tickerPrice%> <%=new Date(transaction.timestamp)%> <%=transaction.quantity%></li>
                 <% } %>
             </ul>
         <% } else { %>

@@ -3,7 +3,9 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const db = require('./utils/database');
+const mongoConnect = require('./utils/database').mongoConnect;
+
+const session = require('express-session');
 
 const app = express();
 
@@ -15,6 +17,9 @@ const userRoutes = require('./routes/user');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+    session({secret: 'my secret', resave: false, saveUninitialized: false})
+    );
 
 app.use(userRoutes.routes);
 app.use(adminRoutes);
@@ -24,4 +29,6 @@ app.use((req, res, next) => {
     res.status(404).render('404', { pageTitle: 'Page not found' });
 });
 
-app.listen(3000);
+mongoConnect(() => {
+    app.listen(3000);
+});

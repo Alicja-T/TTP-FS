@@ -44,6 +44,17 @@ router.get('/portfolio',(req, res, next) => {
     });
 });
 
+router.get('/transaction',(req, res, next) => {
+    console.log('transaction');
+    res.render('transaction', {
+        pageTitle: 'Buy',
+        path: '/transaction',
+        activePortfolio: true
+    });
+});
+
+router.post('/transaction', userController.postTransaction);
+
 
 router.get("/",(req, res, next) => {
     console.log('home page');
