@@ -7,11 +7,14 @@
         <form class="transaction-form" action="" method="POST">
             <div class="form-control">
                 <label for="ticker-symbol">Ticker</label>
-                <input type="text" name="ticker" id="ticker">
+                <input type="text" name="ticker" id="ticker" value=<%=ticker%>>
                 <label for="price">Price</label>
-                <input type="number" name="price">
+                <input type="number" name="price" value=<%=tickerPrice%>>
                 <label for="quantity">Quantity</label>
                 <input type="number" name="quantity">
+                <% if (error) {%>
+                    <p>incorrect ticker, try again</p>
+                <% }%>
             </div>
                 <button type="submit">Buy</button>
            

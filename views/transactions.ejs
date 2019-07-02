@@ -4,13 +4,27 @@
 <body>
     <%- include('includes/navigation.ejs') %>
     <% if (transactions.length > 0) { %>
-        <h1>Transactions:</h1>
-            <ul>
-                <% for (let transaction of transactions) { %>
-                <li><%=transaction.userId%> <%=transaction.ticker%> <%=transaction.tickerPrice%> <%=new Date(transaction.timestamp)%> <%=transaction.quantity%></li>
-                <% } %>
-            </ul>
-        <% } else { %>
-            <h1>No Users Found!</h1>
+        <table>
+        <caption>Transactions:</caption>
+        <tr>
+            <td></td>
+            <th scope="col">Ticker Symbol</th>
+            <th scope="col">Buy Price</th>
+            <th scope="col">Date</th>
+            <th scope="col">Quantity</th>
+        <tr>
+        
+        <% for (let transaction of transactions) {
+            let date = new Date(transaction.timestamp) %>
+            <tr>
+                <td></td>
+                <td><%=transaction.ticker%></td>
+                <td><%=transaction.tickerPrice%></td>
+                <td><%=date.toLocaleString()%></td> 
+                <td><%=transaction.quantity%></td>
+            </tr>
         <% } %>
+    <% } else { %>
+            <h1>No Transactions Found!</h1>
+    <% } %>
 <%- include('includes/end.ejs') %>

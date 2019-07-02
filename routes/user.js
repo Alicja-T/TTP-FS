@@ -49,7 +49,10 @@ router.get('/transaction',(req, res, next) => {
     res.render('transaction', {
         pageTitle: 'Buy',
         path: '/transaction',
-        activePortfolio: true
+        ticker: "",
+        tickerPrice: "",
+        activePortfolio: true,
+        error: false
     });
 });
 
