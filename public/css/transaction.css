@@ -1,4 +1,4 @@
-.login-form {
+.transaction-form {
     width: 20rem;
     max-width: 90%;
     margin: auto;
@@ -14,17 +14,12 @@
 .form-control input {
     display: block;
     width: 100%;
-    margin-bottom: 0.25rem;
 }
 
 .form-control input {
     border: 1px solid skyblue;
     font: inherit;
     border-radius: 2px;
-}
-
-.form-control input:focus {
-    outline-color:  #2669c0;
 }
 
 button {

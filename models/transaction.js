@@ -1,46 +1,29 @@
-const getDb = require('../utils/database').getDb;
+const mongoose = require('mongoose');
 
-class Transaction {
-    constructor(userId, ticker, tickerPrice, timestamp, quantity) {
-        this.userId = userId;
-        this.ticker = ticker;
-        this.tickerPrice = tickerPrice;
-        this.timestamp = timestamp;
-        this.quantity = quantity;
+const Schema = mongoose.Schema;
+
+const transactionSchema = new Schema ({
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    ticker: {
+        type: String,
+        required: true
+    },
+    tickerPrice: {
+        type: Number,
+        required: true
+    },
+    timestamp : {
+        type: Date,
+        required: true
+    },
+    quantity: {
+        type: Number,
+        required: true
     }
+});
 
-    save() {
-        const db = getDb();
-        return db
-            .collection('transactions')
-            .insertOne(this)
-            .then(result => {
-                console.log(result);
-            })
-            .catch( err => {
-                console.log(err);
-            });
-    }
-
-    static fetchAll() {
-        const db = getDb();
-        return db
-            .collection('transactions')
-            .find()
-            .toArray()
-            .then(transactions => {
-                console.log(transactions);
-                return transactions;
-            })
-            .catch( err => {
-                console.log(err);
-            });
-    }
-
-    static fetchAllForUser(id) {
-       
-    }
-
-}
-
-module.exports = Transaction;
+module.exports = mongoose.model('Transaction', transactionSchema);

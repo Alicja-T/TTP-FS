@@ -1,23 +1,17 @@
 <%- include('includes/head.ejs') %>
- 
+<link rel="stylesheet" href="/css/transaction.css">
+<link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
     <%- include('includes/navigation.ejs') %>
     <main>
-        <form class="transaction-form" action="" method="POST">
-            <div class="form-control">
-                <label for="ticker-symbol">Ticker</label>
-                <input type="text" name="ticker" id="ticker" value=<%=ticker%>>
-                <label for="price">Price</label>
-                <input type="number" name="price" value=<%=tickerPrice%>>
-                <label for="quantity">Quantity</label>
-                <input type="number" name="quantity">
-                <% if (error) {%>
-                    <p>incorrect ticker, try again</p>
-                <% }%>
-            </div>
-                <button type="submit">Buy</button>
-           
+            <%- include('includes/transaction_ticker.ejs') %>
+            <form class="login-form" action="" method="POST">
+               <div class="form-control">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" name="quantity">
+                </div>
+            <button type="submit">Buy</button>
         </form>
     </main>
 <%- include('includes/end.ejs') %>

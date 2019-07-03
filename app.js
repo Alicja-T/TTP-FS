@@ -2,58 +2,62 @@
 require('dotenv').config();
 
 const path = require('path');
-const socket = require('socket.io-client')('https://ws-api.iextrading.com/1.0/deep')
+
 const express = require('express');
 const bodyParser = require('body-parser');
-
-const mongoConnect = require('./utils/database').mongoConnect;
+const mongoose = require('mongoose');
 
 const session = require('express-session');
-const fetchSymbols = require('./utils/stocks').fetchSymbols;
+const MongoDBStore = require('connect-mongodb-session')(session);
+const User = require('./models/user');
+const errorController = require('./controllers/error');
+const MONGODB_URI = 'mongodb+srv://portfolio:9J7MvvKmccyDL0cY@cluster0-hed3b.mongodb.net/portfolio';
+
 
 const app = express();
+const store = new MongoDBStore({
+     uri: MONGODB_URI,
+     collection: 'sessions'
+})
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 const adminRoutes = require('./routes/admin');
 const userRoutes = require('./routes/user');
+const authRoutes = require('./routes/auth');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(
-    session({secret: 'my secret', resave: false, saveUninitialized: false})
-    );
+    session({
+        secret: 'my secret', 
+        resave: false, 
+        saveUninitialized: false,
+        store: store
+    })
+);
+
+app.use((req, res, next) => {
+     User.findById('5d1bbeb0fc75e018dc3a9828')
+     .then(user => {
+         req.user = user;
+         next();
+     })
+     .catch(err => console.log(err));
+});
 
 app.use(userRoutes.routes);
 app.use(adminRoutes);
+app.use(authRoutes);
 
+app.use(errorController.get404);
 
-app.use((req, res, next) => {
-    res.status(404).render('404', { pageTitle: 'Page not found' });
-});
-
-// //let dictionary = fetchSymbols(1);
-// //console.log("dupsko " + dictionary[0]);
-// let messArray = [];
-// socket.on('message', message => {
-//     messArray.push(message);
-//     console.log('message');
-//     console.log(messArray);
-// });
-// socket.on('connect', () => {
-//     // Subscribe to topics (i.e. appl,fb,aig+)
-//     socket.emit('subscribe', JSON.stringify({
-//         symbols: ['snap'],
-//         channels: ['officialprice'],
-//     }))
-//     console.log('connected');
-//     // Unsubscribe from topics (i.e. aig+)
-//     //socket.emit('unsubscribe', 'aig+')
-// });
-
-
-mongoConnect(() => {
-
+mongoose
+.connect(MONGODB_URI)
+.then( result => {
     app.listen(3000);
+})
+.catch(err =>{
+    console.log(err);
 });

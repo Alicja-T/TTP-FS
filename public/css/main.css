@@ -9,18 +9,27 @@ body {
 
 main {
     padding: 1rem;
+    margin: auto;
 }
+
+form {
+    display: inline;
+}
+
 .main-header {
     width: 100%;
     height: 3.5rem;
-    background-color: cornflowerblue;
+    background-color: #2285ad;
     padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
 }
 
 .main-header__nav {
     height: 100%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .main-header__item-list {
@@ -38,10 +47,17 @@ main {
 .main-header__item a {
     text-decoration: none;
     color: white;
+    border: none;
+
 }
 
 .main-header__item a:hover,
-.main-header__item a:active
-.main-header__item a.active {
-    color: #66caf1;
+.main-header__item a:active,
+.main-header__item a.active
+{
+    color: #29e1ff;
 }
+.main-header__item button:hover,
+.main-header__item button:active{
+    color: #179fd8;
+} 
