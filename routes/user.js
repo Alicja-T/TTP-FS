@@ -18,15 +18,7 @@ router.get('/portfolio', isAuth, userController.getPortfolio);
 router.post('/transaction', isAuth, userController.postTransaction);
 
 
-router.get("/",(req, res, next) => {
-    console.log('home page');
-    res.render('index', {
-        pageTitle: 'home',
-        path: '/',
-        isAuthenticated: false,
-        activeHome: true
-    });
-});
+router.get("/", userController.getHomePage);
 
 
 module.exports = {

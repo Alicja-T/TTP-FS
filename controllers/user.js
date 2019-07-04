@@ -3,6 +3,16 @@ const retrieveQuote = require('../utils/stocks')
 const User = require('../models/user');
 
 
+exports.getHomePage = (req, res, next) => {
+    console.log('home page');
+    res.render('index', {
+        pageTitle: 'home',
+        path: '/',
+        isAuthenticated: req.session.isLoggedIn,
+        activeHome: true,
+    });
+}
+
 exports.getTransactions = (req, res, next) => {
     Transaction.find()
     .then( transactions => {
@@ -11,7 +21,7 @@ exports.getTransactions = (req, res, next) => {
             transactions: transactions,
             pageTitle: 'transactions',
             isAuthenticated: req.session.isLoggedIn,
-            path: '/'
+            path: '/transactions'
         });
     })
     .catch(err => console.log(err));

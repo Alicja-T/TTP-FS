@@ -12,7 +12,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const User = require('./models/user');
 const errorController = require('./controllers/error');
 const MONGODB_URI = 'mongodb+srv://portfolio:9J7MvvKmccyDL0cY@cluster0-hed3b.mongodb.net/portfolio';
-
+const csrf = require('csurf');
 
 const app = express();
 const store = new MongoDBStore({
@@ -20,6 +20,8 @@ const store = new MongoDBStore({
      collection: 'sessions'
 })
 
+const csrfProtection = csrf();
+ 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
@@ -38,13 +40,24 @@ app.use(
     })
 );
 
+app.use(csrfProtection);
+
 app.use((req, res, next) => {
-     User.findById('5d1bbeb0fc75e018dc3a9828')
+    if (!req.session.user) {
+        return next();
+    }
+    User.findById(req.session.user._id)
      .then(user => {
          req.user = user;
          next();
-     })
-     .catch(err => console.log(err));
+    })
+    .catch(err => console.log(err));
+});
+
+app.use((req, res, next) => {
+    res.locals.isAuthenticated = req.session.isLoggedIn;
+    res.locals.csrfToken = req.csrfToken();
+    next();
 });
 
 app.use(userRoutes.routes);
