@@ -5,14 +5,17 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/user');
 const authController = require('../controllers/auth');
+const isAuth = require('../middleware/is_auth');
 
-router.get('/transactions', userController.getTransactions);
+router.get('/transactions', isAuth, userController.getTransactions);
 
-router.get('/transaction_ticker', userController.findPrice);
+router.get('/transaction_ticker', isAuth, userController.findPrice);
 
-router.get('/transaction', userController.getTransaction);
+router.get('/transaction', isAuth, userController.getTransaction);
 
-router.post('/transaction', userController.postTransaction);
+router.get('/portfolio', isAuth, userController.getPortfolio);
+
+router.post('/transaction', isAuth, userController.postTransaction);
 
 
 router.get("/",(req, res, next) => {

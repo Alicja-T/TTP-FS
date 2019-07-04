@@ -45,6 +45,17 @@ exports.findPrice = (req, res, next) => {
     });
 };
 
+exports.getPortfolio = (req, res, next) => {
+    console.log('portfolio');
+    res.render('portfolio', {
+        pageTitle: 'Portfolio',
+        path: '/portfolio',
+        activePortfolio: true,
+        isAuthenticated: req.session.isLoggedIn,
+        error: false
+    });
+};
+
 exports.getTransaction = (req, res, next) => {
     console.log('transaction');
     res.render('transaction', {
