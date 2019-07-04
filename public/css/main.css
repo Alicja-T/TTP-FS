@@ -61,3 +61,17 @@ form {
 .main-header__item button:active{
     color: #179fd8;
 } 
+
+.user-message {
+    margin: auto;
+    width: 30rem;
+    border: 1px solid #86e2f0;
+    padding: 1rem;
+    border-radius: 3px;
+    background: #89d0ec;
+    text-align: center;
+}
+.user-message--error{
+    border-color: rgb(241, 37, 37);
+    background: rgb(240, 135, 135);
+}

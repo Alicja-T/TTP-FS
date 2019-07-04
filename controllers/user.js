@@ -7,9 +7,7 @@ exports.getHomePage = (req, res, next) => {
     console.log('home page');
     res.render('index', {
         pageTitle: 'home',
-        path: '/',
-        isAuthenticated: req.session.isLoggedIn,
-        activeHome: true,
+        path: '/',        
     });
 }
 
@@ -20,7 +18,6 @@ exports.getTransactions = (req, res, next) => {
         res.render('transactions', {
             transactions: transactions,
             pageTitle: 'transactions',
-            isAuthenticated: req.session.isLoggedIn,
             path: '/transactions'
         });
     })
@@ -32,25 +29,21 @@ exports.findPrice = (req, res, next) => {
     const ticker = req.query.ticker;
     console.log(ticker);
     const quoteData = retrieveQuote.quote(ticker)
-        .then( result => { //reload partial instead
-            res.render('includes/transaction_ticker', {
+        .then( result => { 
+            console.log(result.open);
+            console.log(ticker);
+            res.render('includes/tickerPrice', {
                 ticker: ticker,
                 tickerPrice: result.open,
-                pageTitle: 'transaction',
-                path: '/transaction',
-                isAuthenticated: req.session.isLoggedIn,
-                error : false
-            })
+                errorMessage: "",
+             });
         })
         .catch( err => {
             console.log(err);
-            res.render('includes/transaction_ticker', {
+            res.render('includes/tickerPrice', {
             ticker: "",
             tickerPrice: "",
-            error : true,
-            pageTitle: 'transaction',
-            path: '/transaction',
-            isAuthenticated: req.session.isLoggedIn
+            errorMessage: "Incorrect ticket symbol",
         })
     });
 };
@@ -61,67 +54,50 @@ exports.getPortfolio = (req, res, next) => {
         pageTitle: 'Portfolio',
         path: '/portfolio',
         activePortfolio: true,
-        isAuthenticated: req.session.isLoggedIn,
         error: false
     });
 };
 
 exports.getTransaction = (req, res, next) => {
+    let message = req.flash();
+    if (message.length > 0) {
+        message = message[0];
+    }
+    else {
+        message = null;
+    }
     console.log('transaction');
     res.render('transaction', {
         pageTitle: 'Buy',
         path: '/transaction',
         ticker: "",
         tickerPrice: "",
-        activePortfolio: true,
-        isAuthenticated: req.session.isLoggedIn,
-        error: false
+        errorMessage: message
     });
 };
 
 
 exports.postTransaction = (req, res, next) => {
     console.log('bought');
-    const ticker = req.body.ticker;
-    const price = req.body.price;
+    const ticker = req.body.transactionTicker;
+    const price = req.body.transactionPrice;
     const quantity = req.body.quantity;
-    
-    const quoteData = retrieveQuote.quote(ticker)
-        .then( result => { //reload partial instead
-            let ticker = "", price = "";
-            if (result) {
-                ticker = result.symbol;
-                price = result.price;
-            }
-            res.render('transaction', {
-                ticker: ticker,
-                tickerPrice: price,
-                pageTitle: 'transaction',
-                isAuthenticated: req.session.isLoggedIn,
-                path: '/transaction',
-                error : false
-            })
-        })
-        .catch( err => {
-            console.log(err);
-            res.render('transaction', {
-            ticker: "",
-            tickerPrice: "",
-            error : true,
-            pageTitle: 'transaction',
-            path: '/transaction',
-            isAuthenticated: req.session.isLoggedIn
-            })
-        });
-    //  const transaction = new Transaction({
-         // userId: req.user, ticker: ticker, tickerPrice: price, timestamp: Date.now(), quantity: quantity});
-    //  transaction
-    //      .save()
-    //      .then(result => {
-    //          console.log('Created Transaction');
-    //          res.redirect('/transaction');
-    //      })
-    //      .catch(err => {
-    //          console.log(err);
-    //      });
+    console.log(ticker);
+    console.log(price);
+    console.log(quantity);
+    const transaction = new Transaction({
+        userId: req.user, 
+        ticker: ticker, 
+        tickerPrice: price, 
+        timestamp: Date.now(), 
+        quantity: quantity});
+        transaction
+          .save()
+          .then(result => {
+              console.log('Created Transaction');
+              res.redirect('/transaction');
+          })
+          .catch(err => {
+              console.log(err);
+          });
 };

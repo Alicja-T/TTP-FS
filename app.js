@@ -13,6 +13,7 @@ const User = require('./models/user');
 const errorController = require('./controllers/error');
 const MONGODB_URI = 'mongodb+srv://portfolio:9J7MvvKmccyDL0cY@cluster0-hed3b.mongodb.net/portfolio';
 const csrf = require('csurf');
+const flash = require('connect-flash');
 
 const app = express();
 const store = new MongoDBStore({
@@ -30,7 +31,7 @@ const userRoutes = require('./routes/user');
 const authRoutes = require('./routes/auth');
 
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public') ) );
 app.use(
     session({
         secret: 'my secret', 
@@ -41,6 +42,7 @@ app.use(
 );
 
 app.use(csrfProtection);
+app.use(flash());
 
 app.use((req, res, next) => {
     if (!req.session.user) {
