@@ -1,7 +1,9 @@
 const Transaction = require('../models/transaction');
 const retrieveQuote = require('../utils/stocks')
 const User = require('../models/user');
-
+const iex_pkey = "&token=" + process.env.IEXCLOUD_PUBLIC_KEY;
+const IEX_URL = "https://cloud.iexapis.com/v1/stock/market/batch?types=ohlc,price&symbols=";
+const axios = require('axios');
 
 exports.getHomePage = (req, res, next) => {
     console.log('home page');
@@ -12,7 +14,7 @@ exports.getHomePage = (req, res, next) => {
 }
 
 exports.getTransactions = (req, res, next) => {
-    Transaction.find()
+    Transaction.find({'userId' : req.user._id})
     .then( transactions => {
         console.log(transactions);
         res.render('transactions', {
@@ -48,15 +50,42 @@ exports.findPrice = (req, res, next) => {
     });
 };
 
+function dynamicPortfolio(portfolio, data) {
+    const result = [];
+    portfolio.forEach( function(element){
+        let openPrice = data[element.ticker.toUpperCase()].ohlc.open.price;
+        let current = data[element.ticker.toUpperCase()].price;
+        let newObject = {
+            ticker: element.ticker, 
+            quantity: element.quantity,
+            currentValue: current * element.quantity,
+            }
+        newObject.color = (openPrice > current ? "red" : (openPrice==current ? "grey" : "green"));    
+        result.push(newObject);
+    });
+    return result;
+}
+
 exports.getPortfolio = (req, res, next) => {
     console.log('portfolio');
-    res.render('portfolio', {
-        pageTitle: 'Portfolio',
-        path: '/portfolio',
-        activePortfolio: true,
-        error: false
-    });
-};
+    let portfolio = req.user.portfolio.stocks;
+    const symbols = portfolio.map(key => key.ticker);
+    console.log(symbols.join(','));
+    axios.get(IEX_URL + symbols.join(',') + iex_pkey)
+        .then(response => {
+            console.log(response.data);
+            portfolio = dynamicPortfolio(portfolio, response.data);
+            console.log(portfolio);
+            res.render('portfolio', {
+                pageTitle: 'Portfolio',
+                path: '/portfolio',
+                portfolio: portfolio                
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+ };
 
 exports.getTransaction = (req, res, next) => {
     let message = req.flash();
@@ -95,6 +124,7 @@ exports.postTransaction = (req, res, next) => {
           .save()
           .then(result => {
               console.log('Created Transaction');
+              req.user.addToPortfolio(result);
               res.redirect('/transaction');
           })
           .catch(err => {

@@ -75,6 +75,7 @@ exports.postRegister = (req, res, next) => {
               const user = new User({
                 name: name,
                 email: email,
+                balance: 5000,
                 password: hashedPassword,
                 portfolio: { stocks: []}
               });

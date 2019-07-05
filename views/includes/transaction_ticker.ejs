@@ -1,27 +1,13 @@
-<script>
-    function searchTicker(form) {
-       ticker = document.getElementById("ticker").value;
-      $.get('/transaction_ticker', {
-        ticker: ticker
-      }).then(function (data) {
-        $('#tickerPrice').html(data.tickerPrice);
-      });
-    }
-</script>
-
-
-<form class="login-form" onsubmit="searchTicker(this); return false;">
+<form class="login-form" name="tickerFinder" onsubmit="searchTicker(this); return false;">
     <div class="form-control">
         <label for="ticker-symbol">Ticker</label>
-        <input type="text" name="ticker" id="ticker" value=<%=ticker%>>
+        <input type="text" name="ticker" id="ticker-symbol" value=<%=ticker%>>
         <label for="price">Price</label>
-        <input type="number" name="price" id="tickerPrice" value=<%=tickerPrice%>>
-        <button type="submit">Check Price</button>
-        <p><% if (error) {%>
-            incorrect ticker, try again
-        <% } else { %>
-        </br>
+        <input type="number" name="price" id="ticker-price" value=<%=tickerPrice%> step="0.01">
+        <button type="submit" name="tickerFinder" id="tickerFinder">Check Price</button>
+        <% if (errorMessage) {%>
+          <div class="user-message user-message--error"><%= errorMessage%></div>
         <% } %>
-        </p>
     </div>
+
 </form>

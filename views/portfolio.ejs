@@ -1,10 +1,29 @@
 <%- include('includes/head.ejs') %>
 <link rel="stylesheet" href="/css/login.css">
+<link rel="stylesheet" href="/css/portfolio.css">
 </head>
 <body>
     <%- include('includes/navigation.ejs') %>
     <main>
-        <h1>My portfolio</h1>
-        <p>List of stocks.</p>
+         <% if (portfolio.length > 0) { %>
+                <table>
+                <caption>Your portfolio:</caption>
+                <tr>
+                    <td></td>
+                    <th scope="col">Ticker Symbol</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Current Value</th>
+                <tr>
+                <% for (let stock of portfolio) { %>
+                    <tr>
+                        <td></td>
+                        <td><%=stock.ticker%></td>
+                        <td><%=stock.quantity%></td>
+                        <td class="<%=stock.color%>"><%=stock.currentValue%></td>
+                    </tr>
+                <% } %>
+            <% } else { %>
+                    <h1>Your portfolio is empty!</h1>
+            <% } %>
     </main>
 <%- include('includes/end.ejs') %>

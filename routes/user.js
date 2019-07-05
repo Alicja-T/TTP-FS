@@ -9,7 +9,7 @@ const isAuth = require('../middleware/is_auth');
 
 router.get('/transactions', isAuth, userController.getTransactions);
 
-router.get('/transaction_ticker', isAuth, userController.findPrice);
+router.get('/transactionTicker', isAuth, userController.findPrice);
 
 router.get('/transaction', isAuth, userController.getTransaction);
 
