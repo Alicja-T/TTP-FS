@@ -4,30 +4,73 @@
 }
 
 #portfolio-data{
-    margin: 1rem 0 0 2rem;
+    margin: 2rem;
     width: 50%;
 }
 
 #transaction {
+    margin: 2rem;
+    /* background-color: hsla(214, 87%, 26%, 0.75); */
     width: 50%;
 }
 
-th, td {
-    padding: 0.5em 0.5em 0.5em 1em;
-    vertical-align: text-top;
+h1 {
     text-align: center;
 }
 
-tr {
-    text-align: center;
+table {
+    margin: auto;
 }
 
-tr:nth-child(even) {
-    background-color: rgba(18, 66, 85, 0.5);
+.transaction-form {
+    width: 20rem;
+    max-width: 90%;
+    margin: auto;
+    display: block;
 }
 
-tr:nth-child(odd) {
-    background-color:  rgba(39, 155, 201, 0.5);
+.form-control {
+    margin: 1rem 0;
+}
+
+
+.form-control label,
+.form-control input {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.25rem;
+    padding: 0.25rem;
+}
+
+.form-control input {
+    border: 1px solid skyblue;
+    font: inherit;
+    border-radius: 2px;
+}
+
+.form-control input:focus {
+    outline-color:  #2669c0;
+}
+
+button {
+    font: inherit;
+    border: 1px solid skyblue;
+    background-color: white;
+    color: #093c7e;
+    border-radius: 3px;
+    padding: 0.5rem;
+    width: 10rem;
+    cursor: pointer;
+}
+
+button:hover,
+button:active {
+    background-color: rgb(36, 152, 219);
+    color: white;
+}
+
+.up, .down, .no-change {
+    text-align: right;
 }
 
 .up{
@@ -46,5 +89,13 @@ tr:nth-child(odd) {
 @media (max-width: 768px) {
     .portfolio {
         flex-direction: column;
+    }
+
+    #portfolio-data{
+        width: 100%;
+    }
+
+    #transaction {
+        width: 100%;
     }
 }

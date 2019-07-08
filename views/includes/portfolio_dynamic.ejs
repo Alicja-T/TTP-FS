@@ -1,0 +1,20 @@
+<% if (portfolio.length > 0) { %>
+    <table>
+    <caption>Your portfolio:</caption>
+    <tr>
+        <th scope="col">Ticker Symbol</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Current Value</th>
+    <tr>
+    <% for (let stock of portfolio) { %>
+        <tr>
+            <td><%=stock.ticker%></td>
+            <td><%=stock.quantity%></td>
+            <td class="<%=stock.color%>">$<%=(stock.current * stock.quantity).toFixed(2)%></td>
+        </tr>
+    <% } %>
+    </table>
+    <h1>Total portfolio value: $<%=portfolioValue%></h1>
+<% } else { %>
+        <h1>Your portfolio is empty!</h1>
+<% } %>

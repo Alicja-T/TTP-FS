@@ -26,7 +26,7 @@ const csrfProtection = csrf();
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
-const adminRoutes = require('./routes/admin');
+
 const userRoutes = require('./routes/user');
 const authRoutes = require('./routes/auth');
 
@@ -63,7 +63,6 @@ app.use((req, res, next) => {
 });
 
 app.use(userRoutes.routes);
-app.use(adminRoutes);
 app.use(authRoutes);
 
 app.use(errorController.get404);

@@ -1,13 +1,9 @@
-<form class="login-form" name="tickerFinder" onsubmit="searchTicker(this); return false;">
+<form class="transaction-form" name="tickerFinder" onsubmit="searchTicker(this); return false;">
     <div class="form-control">
         <label for="ticker-symbol">Ticker</label>
         <input type="text" name="ticker" id="ticker-symbol" value=<%=ticker%>>
         <label for="price">Price</label>
-        <input type="number" name="price" id="ticker-price" value=<%=tickerPrice%> step="0.01">
+        <input disabled type="number" name="price" id="ticker-price" value=<%=tickerPrice%> >
         <button type="submit" name="tickerFinder" id="tickerFinder">Check Price</button>
-        <% if (errorMessage) {%>
-          <div class="user-message user-message--error"><%= errorMessage%></div>
-        <% } %>
-    </div>
-
+   </div>
 </form>

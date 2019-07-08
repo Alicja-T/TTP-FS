@@ -52,6 +52,7 @@ userSchema.methods.addToPortfolio = function(transaction) {
     const updatedPortfolio = {
         stocks: updatedStocks
     };
+    this.balance -= transaction.quantity*transaction.tickerPrice;
     this.portfolio = updatedPortfolio;
     return this.save();
 };
