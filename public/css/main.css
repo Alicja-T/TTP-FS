@@ -5,6 +5,7 @@ body {
     margin: 0;
     font-family: sans-serif;
     color: white;
+    width: 100%;
 }
 
 main {
@@ -20,13 +21,15 @@ form {
     width: 100%;
     height: 3.5rem;
     background-color: #2285ad;
-    padding: 0 1.5rem;
+    padding: 0;
     display: flex;
     align-items: center;
 }
 
 .main-header__nav {
     height: 100%;
+    width: 100%;
+    padding: 0 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;

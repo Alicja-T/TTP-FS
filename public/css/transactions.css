@@ -1,0 +1,14 @@
+.transactions{
+    width: 50%;
+    background-color: rgba(18, 66, 85, 0.253);
+    margin: 3rem auto;
+}
+
+table {
+    margin: 0 auto;
+}
+
+caption {
+    text-align: left;
+    padding: 0.25rem 0.25rem;
+}

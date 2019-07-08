@@ -1,12 +1,50 @@
-.green{
+.portfolio {
+    display: flex;
+
+}
+
+#portfolio-data{
+    margin: 1rem 0 0 2rem;
+    width: 50%;
+}
+
+#transaction {
+    width: 50%;
+}
+
+th, td {
+    padding: 0.5em 0.5em 0.5em 1em;
+    vertical-align: text-top;
+    text-align: center;
+}
+
+tr {
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: rgba(18, 66, 85, 0.5);
+}
+
+tr:nth-child(odd) {
+    background-color:  rgba(39, 155, 201, 0.5);
+}
+
+.up{
     color: rgb(29, 228, 29);
 }
 
-.red{
+.down{
     color: rgb(247, 14, 14);
 
 }
 
-.grey {
+.no-change {
     color: rgb(206, 203, 203);
+}
+
+@media (max-width: 768px) {
+    .portfolio {
+        flex-direction: column;
+    }
 }
