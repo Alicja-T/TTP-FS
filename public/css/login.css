@@ -32,13 +32,13 @@ button {
     font: inherit;
     border: 1px solid skyblue;
     background: white;
-    color: #2669c0;
+    color: #093c7e;
     border-radius: 3px;
     cursor: pointer;
 }
 
 button:hover,
 button:active {
-    background-color: aqua;
+    background-color: rgb(36, 152, 219);
     color: white;
 }

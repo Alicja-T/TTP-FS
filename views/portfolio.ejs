@@ -10,7 +10,6 @@
             <div id="portfolio-data">
             <% if (portfolio.length > 0) { %>
                 <table>
-                    <caption>Your portfolio:</caption>
                         <tr>
                             <th scope="col">Ticker Symbol</th>
                             <th scope="col">Quantity</th>
@@ -20,7 +19,7 @@
                         <tr>
                             <td><%=stock.ticker%></td>
                             <td><%=stock.quantity%></td>
-                            <td class="<%=stock.color%>">$<%=(stock.current * stock.quantity).toFixed(2)%></td>
+                            <td class="<%=stock.color%>">$<%=(stock.current * stock.quantity).toFixed(2) %></td>
                         </tr>
                     <% } %>
                 </table>

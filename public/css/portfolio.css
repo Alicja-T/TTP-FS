@@ -5,13 +5,16 @@
 
 #portfolio-data{
     margin: 2rem;
+    background-color: hsla(207, 67%, 20%, 0.75);
     width: 50%;
+    padding: 2rem;
 }
 
 #transaction {
     margin: 2rem;
-    /* background-color: hsla(214, 87%, 26%, 0.75); */
+    background-color: hsla(207, 72%, 52%, 0.75);
     width: 50%;
+    padding: 2rem;
 }
 
 h1 {
@@ -58,8 +61,8 @@ button {
     background-color: white;
     color: #093c7e;
     border-radius: 3px;
-    padding: 0.5rem;
-    width: 10rem;
+    padding: 0.5rem 0;
+    width: 6rem;
     cursor: pointer;
 }
 
@@ -93,9 +96,13 @@ button:active {
 
     #portfolio-data{
         width: 100%;
+        margin: auto;
+        padding: 0;
     }
 
     #transaction {
         width: 100%;
+        margin: auto;
+        padding: 1rem 0;
     }
 }

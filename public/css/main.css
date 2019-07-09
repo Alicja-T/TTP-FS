@@ -1,3 +1,8 @@
+html {
+    margin: 0;
+    padding: 0;
+}
+
 body {
     background: url('https://cdn.pixabay.com/photo/2017/07/30/10/00/economy-2553884_960_720.jpg') no-repeat;
     background-size: cover;
@@ -6,6 +11,7 @@ body {
     font-family: sans-serif;
     color: white;
     width: 100%;
+    height: 100%;
 }
 
 main {
@@ -21,7 +27,7 @@ form {
     width: 100%;
     height: 3.5rem;
     background-color: #2285ad;
-    padding: 0;
+    padding: 0 0.25rem;
     display: flex;
     align-items: center;
 }
@@ -29,7 +35,7 @@ form {
 .main-header__nav {
     height: 100%;
     width: 100%;
-    padding: 0 1.5rem;
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -62,7 +68,7 @@ form {
 }
 .main-header__item button:hover,
 .main-header__item button:active{
-    color: #179fd8;
+    color: white;
 } 
 
 .user-message {
@@ -78,3 +84,16 @@ form {
     border-color: rgb(241, 37, 37);
     background: rgb(240, 135, 135);
 }
+
+.logout {
+    font: inherit;
+    background-color: #056f80;
+    border: 1px solid skyblue;
+    border-radius: 3px;
+    color: white;
+    padding: 0.5rem 0;
+    width: 6rem;
+    cursor: pointer;
+}
+
+
