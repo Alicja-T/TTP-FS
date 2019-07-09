@@ -1,9 +1,8 @@
 const Transaction = require('../models/transaction');
 const stocks = require('../utils/stocks')
 const User = require('../models/user');
-const iex_pkey = "&token=" + process.env.IEXCLOUD_PUBLIC_KEY;
-const IEX_URL = "https://cloud.iexapis.com/v1/stock/market/batch?types=ohlc,price&symbols=";
-const axios = require('axios');
+const { validationResult } = require('express-validator');
+
 
 exports.getHomePage = (req, res, next) => {
     console.log('home page');
@@ -116,37 +115,6 @@ exports.getPortfolio = (req, res, next) => {
     });
 };
 
-// exports.postTransaction = (req, res, next) => {
-//     console.log('bought');
-//     const ticker = req.body.transactionTicker;
-//     const price = req.body.transactionPrice;
-//     const quantity = req.body.quantity;
-//     console.log(req.user.balance);
-//     if (price*quantity > req.user.balance) {
-//         req.flash('error', 'Insufficient funds');
-//         console.log(req);
-//         this.getTransaction(req,res,next);
-//     }
-//     else {
-//     const transaction = new Transaction({
-//         userId: req.user, 
-//         ticker: ticker, 
-//         tickerPrice: price, 
-//         timestamp: Date.now(), 
-//         quantity: quantity});
-//         transaction
-//           .save()
-//           .then(result => {
-//               console.log('Created Transaction');
-//               req.user.addToPortfolio(result);
-//               res.redirect('/transaction');
-//           })
-//           .catch(err => {
-//               console.log(err);
-//           });
-//     }
-// };
-
 function updateSessionData(req, transaction){
     console.log("updating session data...");
     req.session.user.balance -= transaction.tickerPrice * transaction.quantity;
@@ -179,6 +147,22 @@ exports.postPortfolio  = (req, res, next) => {
     const ticker = req.body.transactionTicker;
     const price = req.body.transactionPrice;
     const quantity = req.body.quantity;
+    const errors = validationResult(req);
+
+    if ( !errors.isEmpty() ) {
+        console.log(errors.array());
+        return res.status(422).render('portfolio',  {
+            path: '/portfolio',
+            pageTitle: 'portfolio',
+            errorMessage: errors.array()[0].msg,
+            ticker: "",
+            tickerPrice: "",
+            balance: req.session.user.balance,
+            portfolio: req.session.portfolio,
+            portfolioValue: req.session.portfolioValue
+        }); 
+    }
+
     console.log(req.user.balance);
     if (price*quantity > req.user.balance) {
         req.flash('error', 'Insufficient funds');

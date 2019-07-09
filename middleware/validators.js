@@ -1,5 +1,6 @@
 const {body} = require('express-validator');
 const User = require('../models/user');
+const stocks = require('../utils/stocks')
 
 
 exports.registration = [
@@ -34,4 +35,38 @@ exports.registration = [
         }
         return true;
     })
+]
+
+exports.transaction = [
+    body('transactionTicker', 
+    'Please enter transaction ticker')
+    .isLength({min: 1})
+    .custom((value, {req}) => {
+        let ticker = value.toUpperCase();
+        return stocks.getSingleQuote(ticker)
+            .then( result => {
+                console.log(result);
+                req.body.transactionTicker = ticker;
+                req.body.transactionPrice = result.data[ticker].quote.latestPrice,
+                req.body.openPrice = result.data[ticker].quote.open
+            })
+            .catch(err => {
+                console.log(err);
+                if (err) {
+                    throw new Error('Incorrect ticker.')
+                }
+            });
+    }),
+
+    body('quantity', 
+    'Quantity has to be greater than zero.')
+    .isInt({min: 1})
+    .custom((value, {req}) => {
+        if (value * req.body.transactionPrice > req.session.user.balance) {
+            throw new Error('Insufficient funds.')
+        }
+        return true;
+    }),
+
+
 ]
