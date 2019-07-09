@@ -13,7 +13,7 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const User = require('./models/user');
 const errorController = require('./controllers/error');
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI = 'mongodb+srv://portfolio:9J7MvvKmccyDL0cY@cluster0-hed3b.mongodb.net/portfolio';
 const csrf = require('csurf');
 const flash = require('connect-flash');
 
