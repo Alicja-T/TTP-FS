@@ -1,9 +1,7 @@
-const  iex = require( 'iexcloud_api_wrapper' );
 const axios = require('axios');
 const iex_pkey = "&token=" + process.env.IEXCLOUD_PUBLIC_KEY;
 const IEX_OPEN_URL = "https://cloud.iexapis.com/v1/stock/market/batch?types=quote&symbols=";
 const IEX_CURRENT_URL = "https://cloud.iexapis.com/v1/stock/market/batch?types=price&symbols=";
-const IEX_SINGLE_URL = "https://cloud.iexapis.com/v1/stock/"
 
 
 exports.quote = async (sym) => {
