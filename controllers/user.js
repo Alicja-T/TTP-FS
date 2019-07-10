@@ -57,6 +57,7 @@ exports.findPrice = (req, res, next) => {
                 ticker: "",
                 tickerPrice: "",
                 errorMessage: "Incorrect ticket symbol",
+                openPrice: ""
                 })
             });
     }

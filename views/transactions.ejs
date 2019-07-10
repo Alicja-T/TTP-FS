@@ -20,7 +20,7 @@
             <tr>
                 <td><%=transaction.ticker%></td>
                 <td><%=transaction.tickerPrice%></td>
-                <td><%=date.toLocaleString()%></td> 
+                <td><%=date.toLocaleString({timezone: "America/New_York"})%></td> 
                 <td><%=transaction.quantity%></td>
             </tr>
         <% } %>

@@ -25,6 +25,10 @@ table {
     margin: auto;
 }
 
+table caption a {
+    color: lightskyblue;
+}
+
 .transaction-form {
     width: 20rem;
     max-width: 90%;
