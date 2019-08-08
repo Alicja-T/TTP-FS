@@ -47,8 +47,8 @@ exports.transaction = [
             .then( result => {
                 console.log(result);
                 req.body.transactionTicker = ticker;
-                req.body.transactionPrice = result.data[ticker].quote.latestPrice,
-                req.body.openPrice = result.data[ticker].quote.open
+                req.body.transactionPrice = result.data[0].price,
+                req.body.openPrice = result.data[0].price
             })
             .catch(err => {
                 console.log(err);

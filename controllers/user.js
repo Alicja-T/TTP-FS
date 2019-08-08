@@ -40,15 +40,15 @@ exports.findPrice = (req, res, next) => {
         });
     }
     else {
-        const quoteData = stocks.getSingleQuote(ticker)
+        const quoteData = stocks.getOpenPrice(ticker)
             .then( result => { 
-                console.log(result.data);
+                console.log(result.data["Global Quote"]);
                 console.log(ticker);
                 res.render('includes/tickerPrice', {
                     ticker: ticker,
-                    tickerPrice: result.data[ticker].quote.latestPrice,
+                    tickerPrice: result.data["Global Quote"]["05. price"],
                     errorMessage: "",
-                    openPrice: result.data[ticker].quote.open
+                    openPrice: result.data["Global Quote"]["02. open"]
                 });
             })
             .catch( err => {
@@ -65,8 +65,13 @@ exports.findPrice = (req, res, next) => {
 
 function dynamicPortfolio(portfolio, data) {
     let value = 0;
+    symbolValues = {};
+    data.forEach( function(element) {
+        symbolValues[element.symbol] = element.price;
+    });
     portfolio.forEach( function(element){
-        let current = data[element.ticker.toUpperCase()].price.toFixed(2);
+        let symbol = element.ticker.toUpperCase();
+        let current = symbolValues[symbol];
         element.current = current;
         value += current * element.quantity;
         element.color = (element.open > current ? "down" : (element.open == current ? "no-change" : "up"));    

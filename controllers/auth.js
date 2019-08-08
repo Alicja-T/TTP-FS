@@ -28,9 +28,17 @@ exports.getRegister = (req, res, next) => {
 function getDynamicPortfolio(userPortfolio, stockdata){
   let stocks = [];
   let value = 0;
+  symbolValues = {};
+    stockdata.forEach( function(element) {
+        symbolValues[element.symbol] = element.price;
+    });
+  console.log(symbolValues);
   userPortfolio.forEach(function(element){
-    const tickerValue = stockdata[element.ticker].quote.latestPrice;
-    const openValue = stockdata[element.ticker].quote.open;
+
+    const tickerValue = symbolValues[element.ticker];
+    const openValue = symbolValues[element.ticker];
+    console.log(tickerValue);
+    console.log(openValue);
     let newObject = {
       ticker : element.ticker,
       quantity : element.quantity,
